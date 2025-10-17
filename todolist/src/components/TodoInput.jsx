@@ -1,35 +1,27 @@
 import React, { useState, useEffect } from "react";
 
 function TodoInput() {
-  // 입력값 관리
   const [inputValue, setInputValue] = useState("");
-  // todo 목록 관리
   const [todoList, setTodoList] = useState([]);
 
-  // 입력 변경 시
   const handleChange = (e) => {
     setInputValue(e.target.value);
   };
 
-  // 등록 버튼 클릭 시
   const handleAddTodo = () => {
-    if (inputValue.trim() === "") return; // 빈 값 방지
+    if (inputValue.trim() === "") return; 
 
-    // 새로운 todo 객체 생성
     const newTodo = {
-      id: Date.now(), // 현재 시간으로 고유 id 생성
+      id: Date.now(), 
       todo: inputValue,
       isComplete: false,
     };
 
-    // 기존 목록에 새 항목 추가 (스프레드 연산자)
     setTodoList([...todoList, newTodo]);
 
-    // 입력창 초기화
     setInputValue("");
   };
 
-  // todoList 변경될 때마다 콘솔 출력
   useEffect(() => {
     console.log("📋 현재 todoList:", todoList);
   }, [todoList]);
