@@ -1,73 +1,36 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import "./Todo.css";
 
-function TodoInput() {
-  const [inputValue, setInputValue] = useState("");
-  const [todoList, setTodoList] = useState([]);
+const TodoInput = ({ addTodo }) => {
+  const [value, setValue] = useState("");
 
-  const handleChange = (e) => {
-    setInputValue(e.target.value);
+  const handleAdd = () => {
+    const trimmed = value.trim();
+    if (trimmed === "") return;
+    addTodo(trimmed);
+    setValue("");
   };
 
-  const handleAddTodo = () => {
-    if (inputValue.trim() === "") return; 
-
-    const newTodo = {
-      id: Date.now(), 
-      todo: inputValue,
-      isComplete: false,
-    };
-
-    setTodoList([...todoList, newTodo]);
-
-    setInputValue("");
+  // 엔터로도 추가
+  const onKeyDown = (e) => {
+    if (e.key === "Enter") handleAdd();
   };
-
-  useEffect(() => {
-    console.log("📋 현재 todoList:", todoList);
-  }, [todoList]);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-        backgroundColor: "#fff",
-      }}
-    >
-      <div>
-        <input
-          type="text"
-          placeholder="할 일을 입력하세요"
-          value={inputValue}
-          onChange={handleChange}
-          style={{
-            width: "250px",
-            padding: "10px",
-            fontSize: "16px",
-            borderRadius: "8px",
-            border: "1px solid #ccc",
-            marginRight: "10px",
-          }}
-        />
-        <button
-          onClick={handleAddTodo}
-          style={{
-            padding: "10px 20px",
-            fontSize: "16px",
-            borderRadius: "8px",
-            backgroundColor: "#1e73be",
-            color: "white",
-            border: "none",
-            cursor: "pointer",
-          }}
-        >
-          등록
-        </button>
-      </div>
+    <div className="input-row">
+      <input
+        className="todo-input"
+        type="text"
+        placeholder="할 일을 입력하세요"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        onKeyDown={onKeyDown}
+      />
+      <button className="add-btn" onClick={handleAdd}>
+        등록
+      </button>
     </div>
   );
-}
+};
 
 export default TodoInput;
