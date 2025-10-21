@@ -1,0 +1,43 @@
+.list-area {
+  margin-top: 10px;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+}
+
+.todo-item span {
+  margin: 0 8px;
+  font-size: 1.1rem;
+}
+
+.todo-item .checked {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.edit-input {
+  margin: 0 8px;
+  padding: 2px 6px;
+  border: 1px solid #90caf9;
+  border-radius: 5px;
+  outline: none;
+}
+
+.edit-btn {
+  margin-left: 5px;
+  background-color: #90a4ae;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.delete-btn {
+  margin-left: 5px;
+  background-color: #43a047;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
