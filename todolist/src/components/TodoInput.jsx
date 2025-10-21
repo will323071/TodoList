@@ -27,7 +27,7 @@ export default function TodoInput({ todoList, setTodoList }) {
   }, [inputValue]);
 
   useEffect(() => {
-    console.log("todoList", todoList);
+    console.log(todoList);
   }, [todoList]);
 
   return (
