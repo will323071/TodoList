@@ -4,9 +4,12 @@ export default function TodoList({ todoList, setTodoList }) {
   const [editingId, setEditingId] = useState(null);
   const [editInput, setEditInput] = useState("");
 
-  const handleDelete = (id) =>
-    setTodoList((prev) => prev.filter((todo) => todo.id !== id));
+  
+  const handleDeleteButtonClick = (clickedId) => {
+    setTodoList((prev) => prev.filter((todo) => todo.id !== clickedId));
+  };
 
+  
   const handleToggleComplete = (id) =>
     setTodoList((prev) =>
       prev.map((todo) =>
@@ -14,17 +17,19 @@ export default function TodoList({ todoList, setTodoList }) {
       )
     );
 
-  const handleStartEdit = (id, currentTodo) => {
-    setEditingId(id);
-    setEditInput(currentTodo);
-  };
-
-  const handleSaveEdit = (id) => {
-    setTodoList((prev) =>
-      prev.map((todo) => (todo.id === id ? { ...todo, todo: editInput } : todo))
-    );
-    setEditingId(null);
-    setEditInput("");
+  
+  const handleEditButtonClick = (id, currentTodo) => {
+    if (editingId !== null) {
+      const newArr = todoList.map((todo) =>
+        todo.id === id ? { ...todo, todo: editInput } : todo
+      );
+      setTodoList(newArr);
+      setEditingId(null);
+      setEditInput("");
+    } else {
+      setEditingId(id);
+      setEditInput(currentTodo);
+    }
   };
 
   const handleCancelEdit = () => {
@@ -43,6 +48,7 @@ export default function TodoList({ todoList, setTodoList }) {
             alignItems: "center",
           }}
         >
+
           <input
             type="checkbox"
             checked={todo.isComplete}
@@ -58,7 +64,7 @@ export default function TodoList({ todoList, setTodoList }) {
                 style={{ marginRight: "6px", flex: 1 }}
               />
               <button
-                onClick={() => handleSaveEdit(todo.id)}
+                onClick={() => handleEditButtonClick(todo.id, todo.todo)}
                 style={{
                   backgroundColor: "lightgreen",
                   border: "none",
@@ -91,7 +97,7 @@ export default function TodoList({ todoList, setTodoList }) {
                 {todo.todo}
               </span>
               <button
-                onClick={() => handleStartEdit(todo.id, todo.todo)}
+                onClick={() => handleEditButtonClick(todo.id, todo.todo)}
                 style={{
                   backgroundColor: "lightsteelblue",
                   border: "none",
@@ -102,7 +108,7 @@ export default function TodoList({ todoList, setTodoList }) {
                 🔄
               </button>
               <button
-                onClick={() => handleDelete(todo.id)}
+                onClick={() => handleDeleteButtonClick(todo.id)}
                 style={{
                   backgroundColor: "lightcoral",
                   border: "none",
