@@ -33,7 +33,7 @@ export default function App() {
         boxShadow: "0 0 15px rgba(0,0,0,0.1)",
         width: 350,
       }}>
-        <TodoInput setTodoList={setTodoList} />
+        <TodoInput todoList={todoList} setTodoList={setTodoList} />
         <Filter selectedFilterId={selectedFilterId} setSelectedFilterId={setSelectedFilterId} />
         <TodoList todoList={filteredTodos} setTodoList={setTodoList} />
       </div>

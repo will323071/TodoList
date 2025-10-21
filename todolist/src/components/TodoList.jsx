@@ -14,19 +14,17 @@ export default function TodoList({ todoList, setTodoList }) {
       )
     );
 
-  const handleEditButtonClick = (id, currentTodo) => {
-    if (editingId === id) {
-      setTodoList((prev) =>
-        prev.map((todo) =>
-          todo.id === id ? { ...todo, todo: editInput } : todo
-        )
-      );
-      setEditingId(null);
-      setEditInput("");
-    } else {
-      setEditingId(id);
-      setEditInput(currentTodo);
-    }
+  const handleStartEdit = (id, currentTodo) => {
+    setEditingId(id);
+    setEditInput(currentTodo);
+  };
+
+  const handleSaveEdit = (id) => {
+    setTodoList((prev) =>
+      prev.map((todo) => (todo.id === id ? { ...todo, todo: editInput } : todo))
+    );
+    setEditingId(null);
+    setEditInput("");
   };
 
   const handleCancelEdit = () => {
@@ -37,7 +35,14 @@ export default function TodoList({ todoList, setTodoList }) {
   return (
     <ul style={{ listStyle: "none", padding: 0 }}>
       {todoList.map((todo) => (
-        <li key={todo.id} style={{ marginBottom: "8px" }}>
+        <li
+          key={todo.id}
+          style={{
+            marginBottom: "8px",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
           <input
             type="checkbox"
             checked={todo.isComplete}
@@ -50,10 +55,10 @@ export default function TodoList({ todoList, setTodoList }) {
               <input
                 value={editInput}
                 onChange={(e) => setEditInput(e.target.value)}
-                style={{ marginRight: "6px" }}
+                style={{ marginRight: "6px", flex: 1 }}
               />
               <button
-                onClick={() => handleEditButtonClick(todo.id, todo.todo)}
+                onClick={() => handleSaveEdit(todo.id)}
                 style={{
                   backgroundColor: "lightgreen",
                   border: "none",
@@ -66,7 +71,7 @@ export default function TodoList({ todoList, setTodoList }) {
               <button
                 onClick={handleCancelEdit}
                 style={{
-                  backgroundColor: "lightgreen",
+                  backgroundColor: "lightcoral",
                   border: "none",
                   cursor: "pointer",
                 }}
@@ -76,9 +81,17 @@ export default function TodoList({ todoList, setTodoList }) {
             </>
           ) : (
             <>
-              <span style={{ marginRight: "8px" }}>{todo.todo}</span>
+              <span
+                style={{
+                  marginRight: "8px",
+                  textDecoration: todo.isComplete ? "line-through" : "none",
+                  flex: 1,
+                }}
+              >
+                {todo.todo}
+              </span>
               <button
-                onClick={() => handleEditButtonClick(todo.id, todo.todo)}
+                onClick={() => handleStartEdit(todo.id, todo.todo)}
                 style={{
                   backgroundColor: "lightsteelblue",
                   border: "none",
@@ -91,7 +104,7 @@ export default function TodoList({ todoList, setTodoList }) {
               <button
                 onClick={() => handleDelete(todo.id)}
                 style={{
-                  backgroundColor: "lightgreen",
+                  backgroundColor: "lightcoral",
                   border: "none",
                   cursor: "pointer",
                 }}

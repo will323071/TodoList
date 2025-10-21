@@ -1,21 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TodoList from "./TodoList";
 
 function generateId() {
   return `${Date.now()}_${Math.floor(Math.random() * 10000)}`;
 }
 
-export default function TodoInput({ setTodoList }) {
+export default function TodoInput({ todoList, setTodoList }) {
   const [inputValue, setInputValue] = useState("");
+
+  const handleChange = (e) => {
+    setInputValue(e.target.value);
+  }
 
   const handleAdd = () => {
     if (inputValue.trim() === "") return;
-    setTodoList(prev => [
-      ...prev,
-      { id: TodoList.length, todo: inputValue, isComplete: false },
-    ]);
+    const newArr = [
+      ...todoList,
+      { id: todoList.length, todo: inputValue, isComplete: false },
+    ];
+    setTodoList(newArr);
     setInputValue("");
   };
+
+  useEffect(() => {
+    console.log("inputValue", inputValue);
+  }, [inputValue]);
+
+  useEffect(() => {
+    console.log("todoList", todoList);
+  }, [todoList]);
 
   return (
     <div style={{ display: "flex", marginBottom: 15 }}>
